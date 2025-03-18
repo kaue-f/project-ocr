@@ -16,9 +16,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('country_code', 4);
             $table->string('phone');
-            $table->enum('source_language', Language::values());
-            $table->enum('target_language', Language::values());
+            $table->enum('source_language', Language::names());
+            $table->enum('target_language', Language::names());
             $table->string('path');
             $table->text('ocr_text');
             $table->integer('numbers_words');
