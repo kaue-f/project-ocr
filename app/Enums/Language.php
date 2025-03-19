@@ -21,4 +21,12 @@ enum Language: string
 
         );
     }
+
+    public static function getValue($language)
+    {
+        return match ($language) {
+            Language::EN->name => 0.20,
+            Language::IT->name => 0.25,
+        };
+    }
 }

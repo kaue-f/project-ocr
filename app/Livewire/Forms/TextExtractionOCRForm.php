@@ -79,5 +79,6 @@ class TextExtractionOCRForm extends Form
         $this->sourceLanguage = Language::PT->name;
         $this->targetLanguage = Language::EN->name;
         $this->file;
+        $this->resetErrorBag();
     }
 }

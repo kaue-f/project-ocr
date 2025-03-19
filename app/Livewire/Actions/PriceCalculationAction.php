@@ -7,20 +7,17 @@ use Illuminate\Support\Str;
 
 class PriceCalculationAction
 {
-    public function execute($ocr, $language)
+    public function execute($ocr, $language): array
     {
-        $value = match ($language) {
-            Language::EN->value => 0.20,
-            Language::IT->value => 0.25,
-        };
+        $value = Language::getValue($language);
 
-        $count = (int) Str::wordCount($ocr);
+        $count = (int) Str::wordCount($ocr[0]);
 
         $price = round($count * $value, 2);
 
         return [
-            'numbers' => floatval($count),
-            'price' => $price
+            'numbers' => $count,
+            'price' => floatval($price)
         ];
     }
 }

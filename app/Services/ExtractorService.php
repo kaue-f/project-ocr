@@ -11,12 +11,15 @@ class ExtractorService
 {
     public function process(TextExtractionOCRForm $textExtractionOCRForm)
     {
-        $ocr = "In addition to toggling the visibility of entire elements, it's often useful to change the styling of an existing element by toggling CSS classes on and off during requests to the server. This technique can be used for things like changing background colors, lowering opacity, triggering spinning animations, and more.";
+        $ocr = '';
+
+        if (empty($ocr)) {
+            return false;
+        }
 
         $numbersPrice = app(PriceCalculationAction::class)->execute($ocr, $textExtractionOCRForm->targetLanguage);
 
         $path = app(SaveDocAction::class)->execute($textExtractionOCRForm->file);
-
         return DocumentTranslation::create([
             'name' => $textExtractionOCRForm->name,
             'email' => $textExtractionOCRForm->email,
@@ -29,6 +32,5 @@ class ExtractorService
             'numbers_words' => $numbersPrice['numbers'],
             'price' => $numbersPrice['price'],
         ]);
-
     }
 }

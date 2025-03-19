@@ -4,7 +4,7 @@
 
     <div class="flex flex-col items-center">
         <form wire:submit="save" class="flex flex-col py-8 gap-4  2xl:w-2/6 xl:w-2/4 w-3/4">
-            <flux:input wire:model="form.name" :label="__('Nome')" :placeholder="__('Digite seu nome')" />
+            <flux:input wire:model="form.name" :label="__('Nome Completo')" :placeholder="__('Digite seu nome completo')" />
 
             <flux:input wire:model="form.email" :label="__('E-mail')" type="email" :placeholder="__('Digite seu e-mail')" />
 
@@ -37,12 +37,13 @@
         </form>
 
         <div class="flex flex-col gap-4 justify-start items-start 2xl:w-2/6 xl:w-2/4 w-3/4">
-            <div class="flex flex-row font-medium space-x-2">
-                <p>Número de palavras: <span wire:loading.remove wire:target="save" wire:text="numbersWords"></span></p>
+            <div class="flex flex-row font-medium space-x-3">
+                <p>Quantidade de palavras: <span wire:loading.remove wire:target="save" wire:text="numbersWords"></span>
+                </p>
                 <flux:icon.loading wire:loading wire:target="save" />
             </div>
-            <div class="flex flex-row font-medium space-x-2">
-                <p>Valor total: R$ <span wire:loading.remove wire:target="save" wire:text="price"></span></p>
+            <div class="flex flex-row font-medium space-x-3">
+                <p>Valor total: <span wire:loading.remove wire:target="save" wire:text="price"></span></p>
                 <flux:icon.loading wire:loading wire:target="save" />
             </div>
         </div>
@@ -56,8 +57,9 @@
         const errorMap = ["Número inválido", "Código de país inválido", "Curto demais", "Muito longo", "Número inválido"];
 
         const input = document.querySelector("#phone");
+
         const iti = window.intlTelInput(input, {
-            initialCountry: "br",
+            initialCountry: "BR",
             separateDialCode: true,
             strictMode: true,
             nationalMode: true,
@@ -67,13 +69,17 @@
         $js('validatePhone', () => {
             const countryData = iti.getSelectedCountryData();
             $wire.$set('form.countryCode', countryData.dialCode);
-
+            console.log($wire.form);
             if (!iti.isValidNumber()) {
                 const errorCode = iti.getValidationError();
                 const msg = errorMap[errorCode] || "Número inválido";
                 $wire.setErrorMessage(msg);
             }
         })
+
+        function initTelInput() {
+
+        }
     </script>
     @endscript
 @endpush
