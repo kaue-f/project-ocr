@@ -35,12 +35,6 @@ class TextExtractionOCRForm extends Form
     #[Validate('mimes:jpg,png,pdf,doc,docx,xls,xlsc', message: 'Formato de arquivo inválido. Tipo de arquivos permitidos: PNG, JPG, PDF, DOC, DOCX, XLS, XLSX.')]
     public $file;
 
-    public function getUser($user)
-    {
-        $this->name = $user->name;
-        $this->email = $user->email;
-    }
-
     public function validateForm()
     {
         $this->validate();

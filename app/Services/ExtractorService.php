@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\DocumentTranslation;
+use App\Livewire\API\CloudVisionAPI;
 use App\Livewire\Actions\SaveDocAction;
 use App\Livewire\Forms\TextExtractionOCRForm;
 use App\Livewire\Actions\PriceCalculationAction;
@@ -11,7 +12,7 @@ class ExtractorService
 {
     public function process(TextExtractionOCRForm $textExtractionOCRForm)
     {
-        $ocr = '';
+        $ocr = app(CloudVisionAPI::class)->analyze($textExtractionOCRForm->file);
 
         if (empty($ocr)) {
             return false;
@@ -20,6 +21,7 @@ class ExtractorService
         $numbersPrice = app(PriceCalculationAction::class)->execute($ocr, $textExtractionOCRForm->targetLanguage);
 
         $path = app(SaveDocAction::class)->execute($textExtractionOCRForm->file);
+
         return DocumentTranslation::create([
             'name' => $textExtractionOCRForm->name,
             'email' => $textExtractionOCRForm->email,

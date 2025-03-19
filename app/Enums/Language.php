@@ -18,7 +18,6 @@ enum Language: string
         return array_combine(
             array_column(self::cases(), 'name'),
             array_column(self::cases(), 'value')
-
         );
     }
 
@@ -28,5 +27,15 @@ enum Language: string
             Language::EN->name => 0.20,
             Language::IT->name => 0.25,
         };
+    }
+
+    public static function getPrices()
+    {
+        $languages = [Language::EN->name, Language::IT->name];
+
+        return array_combine(
+            [Language::EN->value, Language::IT->value],
+            array_map([self::class, 'getValue'], $languages)
+        );
     }
 }

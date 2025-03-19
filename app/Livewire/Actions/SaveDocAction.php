@@ -2,10 +2,7 @@
 
 namespace App\Livewire\Actions;
 
-use Aws\S3\S3Client;
 use Livewire\WithFileUploads;
-use Aws\S3\Exception\S3Exception;
-use Illuminate\Support\Facades\Storage;
 
 class SaveDocAction
 {

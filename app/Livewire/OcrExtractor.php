@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Enums\Language;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Number;
 use Livewire\Attributes\Title;
 use App\Services\ExtractorService;
-use Illuminate\Support\Facades\Auth;
 use App\Livewire\Forms\TextExtractionOCRForm;
 
 class OcrExtractor extends Component
@@ -18,17 +18,9 @@ class OcrExtractor extends Component
     public string $price = 'R$ 0,00';
 
     #[Title('Extração de Texto OCR')]
-
     public function render()
     {
         return view('livewire.ocr-extractor');
-    }
-
-    public function mount()
-    {
-        if (Auth::check()) {
-            $this->form->getUser(Auth::user());
-        }
     }
 
     public function save(ExtractorService $extractor)

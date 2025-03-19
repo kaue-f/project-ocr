@@ -1,22 +1,23 @@
 <?php
 
-namespace App\API;
+namespace App\Livewire\API;
 
+use Livewire\WithFileUploads;
 use Google\Cloud\Vision\V1\Feature\Type;
 use Google\Cloud\Vision\V1\Client\ImageAnnotatorClient;
 
 class CloudVisionAPI
 {
+    use WithFileUploads;
+
     public function analyze($doc)
     {
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . base_path(env('GOOGLE_APPLICATION_CREDENTIALS')));
+        putenv('GOOGLE_APPLICATION_CREDENTIALS='.base_path(env('GOOGLE_APPLICATION_CREDENTIALS')));
 
-        $imageAnnotator =  new ImageAnnotatorClient();
+        $imageAnnotator = new ImageAnnotatorClient();
 
         try {
-            $data = file_get_contents($doc);
-
-            $response = $imageAnnotator->annotateImage($data, [Type::LABEL_DETECTION]);
+            $response = $imageAnnotator->annotateImage($doc, [Type::LABEL_DETECTION]);
             $result = $response->getLabelAnnotations();
 
             $labels = [];
